@@ -1,0 +1,42 @@
+{
+    "name": "Alphabetic Removals",
+    "index": "C",
+    "description": "You are given a string $s$ consisting of $n$ lowercase Latin letters. Polycarp wants to remove exactly $k$ characters ($k \\le n$) from the string $s$. Polycarp uses the following algorithm $k$ times:\n -  if there is at least one letter 'a', remove the leftmost occurrence and stop the algorithm, otherwise go to next item; -  if there is at least one letter 'b', remove the leftmost occurrence and stop the algorithm, otherwise go to next item; -  ... -  remove the leftmost occurrence of the letter 'z' and stop the algorithm. \nThis algorithm removes a single letter from the string. Polycarp performs this algorithm exactly $k$ times, thus removing exactly $k$ characters.\n\nHelp Polycarp find the resulting string.",
+    "full_description": "You are given a string $s$ consisting of $n$ lowercase Latin letters. Polycarp wants to remove exactly $k$ characters ($k \\le n$) from the string $s$. Polycarp uses the following algorithm $k$ times:\n -  if there is at least one letter 'a', remove the leftmost occurrence and stop the algorithm, otherwise go to next item; -  if there is at least one letter 'b', remove the leftmost occurrence and stop the algorithm, otherwise go to next item; -  ... -  remove the leftmost occurrence of the letter 'z' and stop the algorithm. \nThis algorithm removes a single letter from the string. Polycarp performs this algorithm exactly $k$ times, thus removing exactly $k$ characters.\n\nHelp Polycarp find the resulting string.\nThe first line of input contains two integers $n$ and $k$ ($1 \\le k \\le n \\le 4 \\cdot 10^5$) — the length of the string and the number of letters Polycarp will remove.\n\nThe second line contains the string $s$ consisting of $n$ lowercase Latin letters.\nPrint the string that will be obtained from $s$ after Polycarp removes exactly $k$ letters using the above algorithm $k$ times.\n\nIf the resulting string is empty, print nothing. It is allowed to print nothing or an empty line (line break).",
+    "train_in_outs": {
+        "inputs": [
+            "15 3\ncccaabababaccbc\n",
+            "15 9\ncccaabababaccbc\n",
+            "1 1\nu\n"
+        ],
+        "outputs": [
+            "cccbbabaccbc\n",
+            "cccccc\n",
+            ""
+        ]
+    },
+    "test_in_outs": {
+        "inputs": [
+            "15 3\ncccaabababaccbc",
+            "15 9\ncccaabababaccbc",
+            "5 2\nzyzyx",
+            "4 3\nhack",
+            "4 3\nzzzz",
+            "6 5\naaccdd",
+            "2 1\nzz",
+            "14 5\nhxehmvkybeklnj"
+        ],
+        "outputs": [
+            "cccbbabaccbc",
+            "cccccc",
+            "zzy",
+            "k",
+            "z",
+            "d",
+            "z",
+            "xmvkyklnj"
+        ]
+    },
+    "code": "n, k_value = map(int, input().split())\r\ninput_string = input()\r\nchar_count = {}\r\n\r\nfor i in range(n):\r\n    if input_string[i] in char_count:\r\n        char_count[input_string[i]] += 1\r\n    else:\r\n        char_count[input_string[i]] = 1\r\n\r\nfor i in range(ord('a'), ord('z') + 1):\r\n    current_char = chr(i)\r\n    if current_char in char_count and char_count[current_char] >= k_value:\r\n        char_count[current_char] -= k_value\r\n        k_value = 0\r\n    else:\r\n        if current_char in char_count:\r\n            k_value -= char_count[current_char]\r\n            char_count[current_char] = 0\r\n\r\nresult_string = \"\"\r\nfor i in range(n - 1, -1, -1):\r\n    if input_string[i] in char_count and char_count[input_string[i]] != 0:\r\n        result_string += input_string[i]\r\n        char_count[input_string[i]] -= 1\r\n\r\nresult_string = result_string[::-1]\r\nprint(result_string)\r\n",
+    "rating": "1200"
+}
